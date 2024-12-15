@@ -1,7 +1,6 @@
 provider "google" {
   project = var.project_id # Replace with your GCP project ID
-  impersonate_service_account = var.impersonated-sa
-
+credentials = file("key.json")
 }
 
 resource "random_string" "pool_id_suffix" {
