@@ -2,7 +2,7 @@
 variable "project_id" {
   type = string
   description = "id for gcp project"
-  default = "silent-base-443011-h7"
+  default = ""
 }
 
 variable "pool_id_suffix" {
@@ -39,7 +39,7 @@ variable "pool_status" {
 variable "provider_id" {
   type = string
   description = "id for workload identity provider"
-  default = "provider-id-here"
+  default = "my-provider"
 }
 
 variable "provider_status" {
@@ -57,7 +57,7 @@ variable "display_name_provider" {
 variable "attribute_condition" {
   type = string
   description = "attribute condition CEL expression to allow access"
-  default = "assertion.namespace_id=='97296242'"
+  default = ""
 }
 
 variable "description_for_provider" {
