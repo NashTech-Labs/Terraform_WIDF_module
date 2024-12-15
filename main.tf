@@ -1,6 +1,6 @@
 provider "google" {
   project = var.project_id # Replace with your GCP project ID
-  # credentials = file("key.json")
+  impersonate_service_account = var.impersonated-sa
 
 }
 
@@ -21,7 +21,6 @@ resource "random_string" "serviceAccount_name_suffix" {
 }
 
 
-#pool
 resource "google_iam_workload_identity_pool" "demo-pool" {
   workload_identity_pool_id = "${var.pool_id_suffix}${random_string.pool_id_suffix.result}"
   display_name              = var.display_name_pool
@@ -53,7 +52,7 @@ resource "google_service_account" "tf_sa" {
 
 }
 
-#Binding workloadIdent  ityUser role to Service Account
+#Binding workloadIdentity User role to Service Account
 resource "google_service_account_iam_member" "workload_identity_binding_sa" {
   service_account_id = google_service_account.tf_sa.name
   role               = var.wid_role 
@@ -65,7 +64,7 @@ resource "google_service_account_iam_member" "workload_identity_binding_sa" {
 #Binding Workload Identity Pool to Service Account
 resource "google_service_account_iam_member" "workload_identity_binding" {
   service_account_id = google_service_account.tf_sa.name
-  role               = var.wid_role # Allow federation
+  role               = var.wid_role 
 
   member = "${var.member}${google_iam_workload_identity_pool.demo-pool.name}/*"
   depends_on = [google_service_account.tf_sa]
